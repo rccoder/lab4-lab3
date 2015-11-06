@@ -1,0 +1,52 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/amazeui.min.css " %}">
+    <link rel="stylesheet" href="{% static "css/amazeui.datetimepicker.css" %}">
+    <link rel="stylesheet" href="{% static "css/app.css " %}">
+</head>
+
+<body>
+    <header class="am-topbar am-topbar-fixed-top">
+        <div class="am-container">
+            <h1 class="am-topbar-brand"><a href="#">图书管理系统</a></h1>
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-secondary am-show-sm-only" data-am-collapse="{target: '#collapse-head'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+            <div class="am-collapse am-topbar-collapse" id="collapse-head">
+                <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right">
+                    <li {% if active == "index"  %}  class="am-active" {% endif %} ><a href="/">首页</a></li>
+                    <li {% if active == "addbook"  %}  class="am-active" {% endif %} ><a href="/addbook/">添加图书</a></li>
+                    <li>
+                        <input type="text" style="margin-top: 10px;" id="search-text" holdeplace="请输入作者的名称">
+                        <button class="am-btn am-btn-success am-radius" id="search-submit" >搜索</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    {% block content %} {% endblock content %}
+    <footer class="am-footer">
+        <div class="am-footer-miscs ">
+            <p>Powered By <a href="http://www.rccoder.net" title="rccoder" target="_blank" class="">rccoder</a>
+            </p>
+        </div>
+    </footer>
+    <script src="{% static "js/jquery.min.js " %}"></script>
+    <script src="{% static "js/amazeui.min.js " %}"></script>
+    <script src="{% static "js/amazeui.datetimepicker.min.js" %}"></script>
+    <script>
+    $(function() {
+        $("#search-submit").click(function () {
+            location.href="/queryAuthor/" + $("#search-text").val() + "/"
+        })
+    })
+    </script>
+    {% block script %}
+    {% endblock %}
+</body>
+
+</html>

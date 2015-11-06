@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% load staticfiles %} {% block title %} 图书管理系统 {% endblock %} {% block content %}
+<div class="am-container list-table">
+    <table class="am-table am-table-bordered am-table-radius am-table-striped">
+        <thead>
+            <tr>
+                <th>ISBN</th>
+                <th>图书名称</th>
+                <th>作者</th>
+                <th>出版社</th>
+                <th>出版日期</th>
+                <th>售价</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+        	<tr>
+                <td>{{ book.ISBN }}</td>
+                <td><a href="listbook/{{ book.ISBN }}">{{ book.Title}}</a></td>
+                <td>{{ book.Author }}</td>
+                <td>{{ book.Publisher }}</td>
+                <td>{{ book.PublishDate }}</td>
+                <td>{{ book.Price }}</td>
+                <td>
+                <button type="submit" class="am-btn am-btn-success am-radius" id="update-submit" value="{{ book.ISBN }}" onclick="location.href='/updatebook/{{ book.ISBN }}'">修改</button>
+                <button type="submit" class="am-btn am-btn-success am-radius" id="delete-submit" value="{{ book.ISBN }}" onclick="DeleteIt(this)">删除</button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+	function DeleteIt(event) {
+		var value = event.value;
+
+		$.ajax({
+			type: "POST",
+			url: "/deletebook/",
+			data: {ISBN: value},
+			dataType: "json",
+		}).done(function(data, textStatus, jqXHR) {
+			if (jqXHR.status == 200) {
+				if(data.status == 1) {
+					alert("删除成功")
+				}
+			}
+		}).fail(function() {
+			alert("未知原因，删除失败")
+		}).always(function() {
+			location.href="/";
+		})
+	}
+</script>
+{% endblock %}

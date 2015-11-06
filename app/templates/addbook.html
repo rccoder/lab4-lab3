@@ -1,0 +1,71 @@
+{% extends "base.html" %} {% load staticfiles %} {% block title %} 添加图书|图书管理系统 {% endblock %} {% block content %}
+<div class="am-container list-table">
+    <form class="am-form" onsubmit="return false">
+    	{% csrf_token %}
+        <table class="am-table am-table-bordered am-table-radius am-table-striped">
+            <tbody>
+                <tr>
+                    <td>ISBN</td>
+                    <td><input type="text" name="ISBN" class="ISBN"></td>
+                </tr>
+                <tr>
+                    <td>书名</td>
+                    <td><input type="text" name="Title" class="Title"></td>
+                </tr>
+                <tr>
+                    <td>作者</td>
+                    <td><input type="text" name="Author" class="Author"></td>
+                </tr>
+                <tr>
+                    <td>出版社</td>
+                    <td><input type="text" name="Publisher" class="Publisher"></td>
+                </tr>
+                <tr>
+                    <td>出版日期</td>
+                    <td><input type="text" name="PublishDate" value="2015-02-15" class="am-form-field PublisherDate"></td>
+                </tr>
+                <tr>
+                    <td>售价</td>
+                    <td><input type="text" name="Price" class="Price"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="am-btn am-btn-success am-radius right" id="add-submit">增加</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+$(function(){
+	$('.PublisherDate').datetimepicker({
+  		format: 'yyyy-mm-dd',
+  		pickerPosition: 'top-right'
+	});
+
+	$("#add-submit").click(function() {
+
+		$.ajax({
+			type: "POST",
+			url: "/addbook/",
+			data: $("form").serialize(),
+			dataType: "json"
+		}).done(function(data, textStatus, jqXHR) {
+            console.log(data)
+            console.log(jqXHR)
+			if(jqXHR.status == 200) {
+				if(data.status == 1) {
+					alert("保存成功")
+				} else if(data.status == 0) {
+                    alert("该ISBN的图书已经存在")
+                }
+			}
+		}).fail(function() {
+            alert("未知名错误")
+		});
+
+	});
+
+})
+</script>
+{% endblock %}

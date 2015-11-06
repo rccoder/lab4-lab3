@@ -1,0 +1,10 @@
+name: BM
+version: 3  
+
+libraries:  
+- name:"django"  
+  version:"1.8.4"    
+
+handlers:
+- url: /static
+  static_dir: static

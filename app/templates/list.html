@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% load staticfiles %} {% block title %} 图书详细信息|图书管理系统 {% endblock %} {% block content %}
+<div class="am-container list-table">
+    <form class="am-form" onsubmit="return false">
+    	{% csrf_token %}
+        <table class="am-table am-table-bordered am-table-radius am-table-striped">
+            <tbody>
+                <tr>
+                    <td>ISBN</td>
+                    <td><input type="text" name="ISBN" class="ISBN" value="{{ book.ISBN }}"></td>
+                </tr>
+                <tr>
+                    <td>书名</td>
+                    <td><input type="text" name="Title" class="Title" value="{{ book.Title }}"></td>
+                </tr>
+                <tr>
+                    <td>作者</td>
+                    <td><input type="text" name="Author" class="Author" value="{{ book.Author }}"></td>
+                </tr>
+                <tr>
+                    <td>作者年龄</td>
+                    <td><input type="text" name="Author" class="AuthorAge" value="{{ book.Author.Age }}"></td>
+                </tr>
+                <tr>
+                    <td>作者国别</td>
+                    <td><input type="text" name="Author" class="AuthorCountry" value="{{ book.Author.Country }}"></td>
+                </tr>
+                <tr>
+                    <td>出版社</td>
+                    <td><input type="text" name="Publisher" class="Publisher" value="{{ book.Publisher }}"></td>
+                </tr>
+                <tr>
+                    <td>出版日期</td>
+                    <td><input type="text" name="PublishDate" value="{{ book.PublishDate}}" class="am-form-field PublisherDate"></td>
+                </tr>
+                <tr>
+                    <td>售价</td>
+                    <td><input type="text" name="Price" class="Price" value="{{ book.Price }}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+{% endblock %}
